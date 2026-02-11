@@ -45,6 +45,38 @@ async function getPlayerInfo(steamId: string) {
   return data.response?.players?.[0] || null
 }
 
+// Получаем статистику игрока (часы в Rust)
+async function getPlayerStats(steamId: string) {
+  try {
+    // Получаем время в играх
+    const gamesRes = await fetch(
+      `https://api.steampowered.com/IPlayerService/GetOwnedGames/v1/?key=${STEAM_API_KEY}&steamid=${steamId}&include_appinfo=true&include_played_free_games=true`
+    )
+    const gamesData = await gamesRes.json()
+    
+    // Ищем Rust (appid: 252490)
+    const rustGame = gamesData.response?.games?.find((g: any) => g.appid === 252490)
+    const playtimeHours = rustGame ? Math.round(rustGame.playtime_forever / 60) : 0
+
+    // Получаем баны
+    const bansRes = await fetch(
+      `https://api.steampowered.com/ISteamUser/GetPlayerBans/v1/?key=${STEAM_API_KEY}&steamids=${steamId}`
+    )
+    const bansData = await bansRes.json()
+    const bans = bansData.players?.[0] || {}
+
+    return {
+      playtimeHours,
+      vacBans: bans.NumberOfVACBans || 0,
+      gameBans: bans.NumberOfGameBans || 0,
+      daysSinceLastBan: bans.DaysSinceLastBan || 0,
+    }
+  } catch (e) {
+    console.error('Stats error:', e)
+    return null
+  }
+}
+
 // Ищем сервер на BattleMetrics по IP
 async function findServerOnBattleMetrics(ip: string, port: string) {
   try {
@@ -110,7 +142,12 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Не удалось определить Steam ID' }, { status: 400 })
     }
 
-    const player = await getPlayerInfo(steamId)
+    // Параллельно получаем данные
+    const [player, stats] = await Promise.all([
+      getPlayerInfo(steamId),
+      getPlayerStats(steamId),
+    ])
+
     if (!player) {
       return NextResponse.json({ error: 'Игрок не найден' }, { status: 404 })
     }
@@ -123,7 +160,7 @@ export async function POST(req: NextRequest) {
       server = await findServerOnBattleMetrics(ip, port)
     }
 
-    return NextResponse.json({ player, server })
+    return NextResponse.json({ player, server, stats })
   } catch (e: any) {
     console.error('Track error:', e)
     return NextResponse.json({ error: 'Ошибка сервера' }, { status: 500 })
