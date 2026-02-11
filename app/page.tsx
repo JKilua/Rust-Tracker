@@ -64,7 +64,7 @@ export default function Home() {
   const [history, setHistory] = useState<SavedPlayer[]>([])
   const [favorites, setFavorites] = useState<SavedPlayer[]>([])
   const [autoRefresh, setAutoRefresh] = useState(false)
-  const [refreshInterval, setRefreshInterval] = useState(30)
+  const [refreshInterval, setRefreshInterval] = useState(10)
   const [pageLoading, setPageLoading] = useState(true)
 
   useEffect(() => {
@@ -268,22 +268,10 @@ export default function Home() {
                   </span>
                 </label>
                 {autoRefresh && (
-                  <>
-                    <select
-                      value={refreshInterval}
-                      onChange={(e) => setRefreshInterval(Number(e.target.value))}
-                      className="bg-zinc-800 rounded-xl px-4 py-2 text-sm border border-zinc-700 focus:border-zinc-600 focus:outline-none"
-                    >
-                      <option value={10}>10 сек</option>
-                      <option value={30}>30 сек</option>
-                      <option value={60}>1 мин</option>
-                      <option value={300}>5 мин</option>
-                    </select>
-                    <span className="text-xs text-green-400 flex items-center gap-1">
-                      <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
-                      Активно
-                    </span>
-                  </>
+                  <span className="text-xs text-green-400 flex items-center gap-1">
+                    <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
+                    Каждые 10 сек
+                  </span>
                 )}
               </div>
             </div>
