@@ -65,12 +65,14 @@ export default function Home() {
   const [favorites, setFavorites] = useState<SavedPlayer[]>([])
   const [autoRefresh, setAutoRefresh] = useState(false)
   const [refreshInterval, setRefreshInterval] = useState(30)
+  const [pageLoading, setPageLoading] = useState(true)
 
   useEffect(() => {
     const savedHistory = localStorage.getItem('searchHistory')
     const savedFavorites = localStorage.getItem('favorites')
     if (savedHistory) setHistory(JSON.parse(savedHistory))
     if (savedFavorites) setFavorites(JSON.parse(savedFavorites))
+    setTimeout(() => setPageLoading(false), 500)
   }, [])
 
   const handleSearch = useCallback(async (url?: string) => {
@@ -127,6 +129,15 @@ export default function Home() {
 
   const isFavorite = (steamid: string) => favorites.some(p => p.steamid === steamid)
   const clearHistory = () => { setHistory([]); localStorage.removeItem('searchHistory') }
+
+  if (pageLoading) {
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center bg-black">
+        <img src="/rust.png" alt="Rust" className="h-24 w-auto object-contain animate-pulse mb-6" />
+        <div className="w-8 h-8 border-2 border-gray-700 border-t-white rounded-full animate-spin" />
+      </div>
+    )
+  }
 
   return (
     <main className="min-h-screen p-4 md:p-8">
