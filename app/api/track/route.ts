@@ -80,14 +80,38 @@ async function getPlayerStats(steamId: string) {
 // Ищем сервер на BattleMetrics по IP
 async function findServerOnBattleMetrics(ip: string, port: string) {
   try {
-    // Поиск по IP:port
+    // Сначала ищем точное совпадение по IP и порту
+    const exactRes = await fetch(
+      `https://api.battlemetrics.com/servers?filter[game]=rust&filter[ip]=${ip}&filter[port]=${port}`
+    )
+    const exactData = await exactRes.json()
+    
+    if (exactData.data?.length > 0) {
+      const server = exactData.data[0]
+      return {
+        name: server.attributes.name,
+        players: server.attributes.players,
+        maxPlayers: server.attributes.maxPlayers,
+        map: server.attributes.details?.map || 'Unknown',
+        ip: server.attributes.ip,
+        port: server.attributes.port,
+        rank: server.attributes.rank,
+        url: `https://www.battlemetrics.com/servers/rust/${server.id}`,
+      }
+    }
+
+    // Поиск по IP:port в строке поиска
     const searchRes = await fetch(
       `https://api.battlemetrics.com/servers?filter[game]=rust&filter[search]=${ip}:${port}`
     )
     const searchData = await searchRes.json()
     
     if (searchData.data?.length > 0) {
-      const server = searchData.data[0]
+      // Ищем сервер с точным совпадением порта
+      const exactMatch = searchData.data.find((s: any) => 
+        s.attributes.ip === ip && String(s.attributes.port) === port
+      )
+      const server = exactMatch || searchData.data[0]
       return {
         name: server.attributes.name,
         players: server.attributes.players,
@@ -102,12 +126,14 @@ async function findServerOnBattleMetrics(ip: string, port: string) {
     
     // Альтернативный поиск только по IP
     const altRes = await fetch(
-      `https://api.battlemetrics.com/servers?filter[game]=rust&filter[search]=${ip}`
+      `https://api.battlemetrics.com/servers?filter[game]=rust&filter[ip]=${ip}`
     )
     const altData = await altRes.json()
     
     if (altData.data?.length > 0) {
-      const server = altData.data[0]
+      // Пробуем найти с правильным портом
+      const matchingPort = altData.data.find((s: any) => String(s.attributes.port) === port)
+      const server = matchingPort || altData.data[0]
       return {
         name: server.attributes.name,
         players: server.attributes.players,
