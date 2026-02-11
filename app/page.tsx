@@ -63,7 +63,7 @@ export default function Home() {
   const [error, setError] = useState('')
   const [history, setHistory] = useState<SavedPlayer[]>([])
   const [favorites, setFavorites] = useState<SavedPlayer[]>([])
-  const [autoRefresh, setAutoRefresh] = useState(false)
+  const [autoRefresh, setAutoRefresh] = useState(true)
   const [refreshInterval, setRefreshInterval] = useState(10)
   const [pageLoading, setPageLoading] = useState(true)
 
@@ -256,24 +256,13 @@ export default function Home() {
                 </div>
               )}
 
-              {/* Auto Refresh */}
-              <div className="mt-6 pt-6 border-t border-zinc-800 flex items-center gap-4 flex-wrap">
-                <label className="flex items-center gap-3 cursor-pointer group">
-                  <div className={`relative w-12 h-6 rounded-full transition-colors ${autoRefresh ? 'bg-zinc-100' : 'bg-zinc-700'}`}>
-                    <input type="checkbox" checked={autoRefresh} onChange={(e) => setAutoRefresh(e.target.checked)} className="sr-only" />
-                    <div className={`absolute top-1 w-4 h-4 rounded-full transition-all ${autoRefresh ? 'left-7 bg-zinc-900' : 'left-1 bg-zinc-500'}`} />
-                  </div>
-                  <span className="text-sm text-zinc-400 flex items-center gap-2">
-                    {Icons.refresh} Автообновление
-                  </span>
-                </label>
-                {autoRefresh && (
-                  <span className="text-xs text-green-400 flex items-center gap-1">
-                    <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
-                    Каждые 10 сек
-                  </span>
-                )}
-              </div>
+              {/* Auto Refresh Indicator */}
+              {data && (
+                <div className="mt-6 pt-6 border-t border-zinc-800 flex items-center gap-2">
+                  <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
+                  <span className="text-xs text-zinc-500">Обновляется каждые 10 сек</span>
+                </div>
+              )}
             </div>
 
             {/* Server Status */}
