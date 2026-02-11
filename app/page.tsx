@@ -10,7 +10,7 @@ const Icons = {
   trash: <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>,
   x: <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>,
   refresh: <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" /></svg>,
-  gamepad: <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a2 2 0 110 4v3a2 2 0 002 2h14a2 2 0 002-2v-3a2 2 0 110-4V7a2 2 0 00-2-2H5z" /></svg>,
+  rust: <img src="https://cdn2.steamgriddb.com/icon/f0e52b27a7a5d6a1a87373dffa53dbe5/32/256x256.png" alt="Rust" className="w-10 h-10" />,
   server: <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01" /></svg>,
   users: <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" /></svg>,
   map: <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" /></svg>,
@@ -134,10 +134,8 @@ export default function Home() {
         {/* Header */}
         <div className="text-center mb-10">
           <div className="inline-flex items-center gap-3 mb-3">
-            <div className="p-3 bg-gradient-to-br from-orange-500 to-red-600 rounded-2xl shadow-lg shadow-orange-500/25">
-              {Icons.gamepad}
-            </div>
-            <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-orange-400 via-red-400 to-orange-500 bg-clip-text text-transparent">
+            {Icons.rust}
+            <h1 className="text-4xl md:text-5xl font-bold text-white">
               Rust Tracker
             </h1>
           </div>
@@ -154,13 +152,13 @@ export default function Home() {
                 onChange={(e) => setSteamUrl(e.target.value)}
                 onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
                 placeholder="Вставь ссылку на Steam профиль или Steam ID..."
-                className="w-full px-5 py-4 bg-gray-800/80 backdrop-blur rounded-2xl border border-gray-700/50 focus:border-orange-500/50 focus:ring-2 focus:ring-orange-500/20 focus:outline-none transition-all text-lg placeholder:text-gray-500"
+                className="w-full px-5 py-4 bg-neutral-900 rounded-2xl border border-neutral-800 focus:border-neutral-600 focus:outline-none transition-all text-lg placeholder:text-neutral-500"
               />
             </div>
             <button
               onClick={() => handleSearch()}
               disabled={loading}
-              className="px-8 py-4 bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 rounded-2xl font-semibold disabled:opacity-50 transition-all shadow-lg shadow-orange-500/25 hover:shadow-orange-500/40 flex items-center gap-2"
+              className="px-8 py-4 bg-white hover:bg-gray-200 text-black rounded-2xl font-semibold disabled:opacity-50 transition-all flex items-center gap-2"
             >
               {loading ? (
                 <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
@@ -199,7 +197,7 @@ export default function Home() {
                       {isFavorite(data.player.steamid) ? Icons.star : Icons.starOutline}
                     </button>
                   </div>
-                  <a href={data.player.profileurl} target="_blank" className="inline-flex items-center gap-1 text-gray-400 hover:text-orange-400 transition-colors">
+                  <a href={data.player.profileurl} target="_blank" className="inline-flex items-center gap-1 text-neutral-400 hover:text-white transition-colors">
                     Открыть Steam профиль {Icons.external}
                   </a>
                 </div>
@@ -214,7 +212,7 @@ export default function Home() {
                         {Icons.clock}
                         <span>Часов в Rust</span>
                       </div>
-                      <p className="text-2xl font-bold text-orange-400">{data.stats.playtimeHours}h</p>
+                      <p className="text-2xl font-bold text-white">{data.stats.playtimeHours}h</p>
                     </div>
                     <div className="p-4 bg-gray-800/50 rounded-2xl">
                       <div className="flex items-center gap-2 text-gray-400 text-sm mb-1">
@@ -250,9 +248,9 @@ export default function Home() {
               {/* Auto Refresh */}
               <div className="mt-6 pt-6 border-t border-gray-700/50 flex items-center gap-4 flex-wrap">
                 <label className="flex items-center gap-3 cursor-pointer group">
-                  <div className={`relative w-12 h-6 rounded-full transition-colors ${autoRefresh ? 'bg-orange-500' : 'bg-gray-700'}`}>
+                  <div className={`relative w-12 h-6 rounded-full transition-colors ${autoRefresh ? 'bg-white' : 'bg-neutral-700'}`}>
                     <input type="checkbox" checked={autoRefresh} onChange={(e) => setAutoRefresh(e.target.checked)} className="sr-only" />
-                    <div className={`absolute top-1 w-4 h-4 bg-white rounded-full transition-all ${autoRefresh ? 'left-7' : 'left-1'}`} />
+                    <div className={`absolute top-1 w-4 h-4 rounded-full transition-all ${autoRefresh ? 'left-7 bg-black' : 'left-1 bg-neutral-400'}`} />
                   </div>
                   <span className="text-sm text-gray-300 flex items-center gap-2">
                     {Icons.refresh} Автообновление
@@ -263,7 +261,7 @@ export default function Home() {
                     <select
                       value={refreshInterval}
                       onChange={(e) => setRefreshInterval(Number(e.target.value))}
-                      className="bg-gray-700 rounded-xl px-4 py-2 text-sm border border-gray-600 focus:border-orange-500 focus:outline-none"
+                      className="bg-neutral-800 rounded-xl px-4 py-2 text-sm border border-neutral-700 focus:border-neutral-500 focus:outline-none"
                     >
                       <option value={10}>10 сек</option>
                       <option value={30}>30 сек</option>
