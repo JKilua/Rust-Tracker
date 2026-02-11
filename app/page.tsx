@@ -63,8 +63,8 @@ export default function Home() {
   const [error, setError] = useState('')
   const [history, setHistory] = useState<SavedPlayer[]>([])
   const [favorites, setFavorites] = useState<SavedPlayer[]>([])
-  const [autoRefresh, setAutoRefresh] = useState(true)
-  const [refreshInterval, setRefreshInterval] = useState(5)
+  const [autoRefresh, setAutoRefresh] = useState(false)
+  const [refreshInterval, setRefreshInterval] = useState(10)
   const [pageLoading, setPageLoading] = useState(true)
 
   useEffect(() => {
@@ -259,64 +259,71 @@ export default function Home() {
             </div>
 
             {/* Server Status */}
-            {data.player.gameid === '252490' ? (
-              data.server ? (
-                <div className="p-6 bg-zinc-900 border border-green-500/30 rounded-3xl">
-                  <div className="flex items-center gap-3 mb-5">
-                    <span className="w-3 h-3 bg-green-500 rounded-full animate-pulse" />
-                    <span className="text-green-400 font-semibold text-lg">Сейчас играет в Rust</span>
+            <div className="p-6 bg-zinc-900 border border-zinc-800 rounded-3xl">
+              {data.player.gameid === '252490' ? (
+                data.server ? (
+                  <>
+                    <div className="flex items-center gap-3 mb-5">
+                      <span className="w-3 h-3 bg-green-500 rounded-full animate-pulse" />
+                      <span className="text-green-400 font-semibold text-lg">Сейчас играет в Rust</span>
+                    </div>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div className="flex items-center gap-3 p-3 bg-zinc-800/50 rounded-xl">
+                        {Icons.server}
+                        <div className="min-w-0 flex-1">
+                          <p className="text-xs text-zinc-500">Сервер</p>
+                          <p className="font-medium truncate">{data.server.name}</p>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-3 p-3 bg-zinc-800/50 rounded-xl">
+                        {Icons.users}
+                        <div>
+                          <p className="text-xs text-zinc-500">Игроки</p>
+                          <p className="font-medium">{data.server.players}/{data.server.maxPlayers}</p>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-3 p-3 bg-zinc-800/50 rounded-xl">
+                        {Icons.map}
+                        <div className="min-w-0 flex-1">
+                          <p className="text-xs text-zinc-500">Карта</p>
+                          <p className="font-medium truncate">{data.server.map}</p>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-3 p-3 bg-zinc-800/50 rounded-xl">
+                        {Icons.globe}
+                        <div>
+                          <p className="text-xs text-zinc-500">IP адрес</p>
+                          <p className="font-medium font-mono text-sm">{data.server.ip}:{data.server.port}</p>
+                        </div>
+                      </div>
+                    </div>
+                    {data.server.url && (
+                      <a href={data.server.url} target="_blank" className="inline-flex items-center gap-2 mt-5 px-5 py-2.5 bg-zinc-800 hover:bg-zinc-700 border border-zinc-700 rounded-xl text-zinc-300 transition-colors">
+                        Открыть на BattleMetrics {Icons.external}
+                      </a>
+                    )}
+                  </>
+                ) : (
+                  <div className="flex items-center gap-3">
+                    <span className="w-3 h-3 bg-yellow-500 rounded-full" />
+                    <div>
+                      <p className="text-yellow-400 font-medium">Играет в Rust, но сервер скрыт</p>
+                      {data.player.gameserverip && <p className="text-zinc-500 mt-1 font-mono text-sm">IP: {data.player.gameserverip}</p>}
+                    </div>
                   </div>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="flex items-center gap-3 p-3 bg-zinc-800/50 rounded-xl">
-                      {Icons.server}
-                      <div>
-                        <p className="text-xs text-zinc-500">Сервер</p>
-                        <p className="font-medium">{data.server.name}</p>
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-3 p-3 bg-zinc-800/50 rounded-xl">
-                      {Icons.users}
-                      <div>
-                        <p className="text-xs text-zinc-500">Игроки</p>
-                        <p className="font-medium">{data.server.players}/{data.server.maxPlayers}</p>
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-3 p-3 bg-zinc-800/50 rounded-xl">
-                      {Icons.map}
-                      <div>
-                        <p className="text-xs text-zinc-500">Карта</p>
-                        <p className="font-medium">{data.server.map}</p>
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-3 p-3 bg-zinc-800/50 rounded-xl">
-                      {Icons.globe}
-                      <div>
-                        <p className="text-xs text-zinc-500">IP адрес</p>
-                        <p className="font-medium font-mono">{data.server.ip}:{data.server.port}</p>
-                      </div>
-                    </div>
-                  </div>
-                  {data.server.url && (
-                    <a href={data.server.url} target="_blank" className="inline-flex items-center gap-2 mt-5 px-5 py-2.5 bg-zinc-800 hover:bg-zinc-700 border border-zinc-700 rounded-xl text-zinc-300 transition-colors">
-                      Открыть на BattleMetrics {Icons.external}
-                    </a>
-                  )}
+                )
+              ) : data.player.gameextrainfo ? (
+                <div className="flex items-center gap-3">
+                  <span className="w-3 h-3 bg-blue-500 rounded-full" />
+                  <p className="text-zinc-300 font-medium">Сейчас играет в: {data.player.gameextrainfo}</p>
                 </div>
               ) : (
-                <div className="p-6 bg-zinc-900 border border-yellow-500/30 rounded-3xl">
-                  <p className="text-yellow-400 font-medium">Играет в Rust, но сервер скрыт или не найден</p>
-                  {data.player.gameserverip && <p className="text-zinc-500 mt-2 font-mono">IP: {data.player.gameserverip}</p>}
+                <div className="flex items-center gap-3">
+                  <span className="w-3 h-3 bg-zinc-600 rounded-full" />
+                  <p className="text-zinc-500">Не в игре</p>
                 </div>
-              )
-            ) : data.player.gameextrainfo ? (
-              <div className="p-6 bg-zinc-900 border border-zinc-700 rounded-3xl">
-                <p className="text-zinc-300 font-medium">Сейчас играет в: {data.player.gameextrainfo}</p>
-              </div>
-            ) : (
-              <div className="p-6 bg-zinc-900 border border-zinc-800 rounded-3xl">
-                <p className="text-zinc-500">Не в игре</p>
-              </div>
-            )}
+              )}
+            </div>
           </div>
         )}
 
