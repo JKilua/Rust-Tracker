@@ -256,11 +256,15 @@ export default function Home() {
                 </div>
               )}
 
-              {/* Auto Refresh Indicator */}
+              {/* Real-time Indicator */}
               {data && (
                 <div className="mt-6 pt-6 border-t border-zinc-800 flex items-center gap-2">
-                  <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
-                  <span className="text-xs text-zinc-500">Обновляется каждые 10 сек</span>
+                  <span className="relative flex h-3 w-3">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
+                  </span>
+                  <span className="text-sm text-green-400 font-medium">LIVE</span>
+                  <span className="text-xs text-zinc-500">• Режим реального времени</span>
                 </div>
               )}
             </div>
