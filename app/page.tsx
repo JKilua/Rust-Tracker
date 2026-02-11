@@ -163,16 +163,16 @@ export default function Home() {
                 onChange={(e) => setSteamUrl(e.target.value)}
                 onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
                 placeholder="Вставь ссылку на Steam профиль или Steam ID..."
-                className="w-full px-5 py-4 bg-slate-900/80 rounded-2xl border border-slate-700/50 focus:border-indigo-400/50 focus:outline-none transition-all text-lg placeholder:text-slate-500"
+                className="w-full px-5 py-4 bg-zinc-900 rounded-2xl border border-zinc-800 focus:border-zinc-600 focus:outline-none transition-all text-lg placeholder:text-zinc-600"
               />
             </div>
             <button
               onClick={() => handleSearch()}
               disabled={loading}
-              className="px-8 py-4 bg-gradient-to-r from-indigo-600 to-violet-500 hover:from-indigo-500 hover:to-violet-400 text-white rounded-2xl font-semibold disabled:opacity-50 transition-all flex items-center gap-2 shadow-lg shadow-indigo-500/30"
+              className="px-8 py-4 bg-zinc-100 hover:bg-white text-zinc-900 rounded-2xl font-semibold disabled:opacity-50 transition-all flex items-center gap-2"
             >
               {loading ? (
-                <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                <div className="w-5 h-5 border-2 border-zinc-400 border-t-zinc-900 rounded-full animate-spin" />
               ) : Icons.search}
               <span className="hidden md:inline">Найти</span>
             </button>
@@ -190,7 +190,7 @@ export default function Home() {
         {data && (
           <div className="space-y-6 mb-10">
             {/* Player Card */}
-            <div className="p-6 bg-gradient-to-br from-slate-900 to-slate-950 backdrop-blur rounded-3xl border border-indigo-500/20 shadow-xl shadow-indigo-500/10">
+            <div className="p-6 bg-zinc-900 rounded-3xl border border-zinc-800">
               <div className="flex items-start gap-5">
                 <img src={data.player.avatarfull} alt="" className="w-20 h-20 rounded-2xl shadow-lg" />
                 <div className="flex-1 min-w-0">
@@ -216,40 +216,40 @@ export default function Home() {
 
               {/* Stats */}
               {data.stats && (
-                <div className="mt-6 pt-6 border-t border-indigo-500/10">
+                <div className="mt-6 pt-6 border-t border-zinc-800">
                   <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                    <div className="p-4 bg-gradient-to-br from-indigo-500/10 to-violet-500/5 rounded-2xl border border-indigo-500/20">
-                      <div className="flex items-center gap-2 text-indigo-300/70 text-sm mb-1">
+                    <div className="p-4 bg-zinc-800/50 rounded-2xl">
+                      <div className="flex items-center gap-2 text-zinc-500 text-sm mb-1">
                         {Icons.clock}
                         <span>Часов в Rust</span>
                       </div>
-                      <p className="text-2xl font-bold text-indigo-300">{data.stats.playtimeHours}h</p>
+                      <p className="text-2xl font-bold text-zinc-100">{data.stats.playtimeHours}h</p>
                     </div>
-                    <div className="p-4 bg-slate-800/50 rounded-2xl border border-slate-700/30">
-                      <div className="flex items-center gap-2 text-slate-400 text-sm mb-1">
+                    <div className="p-4 bg-zinc-800/50 rounded-2xl">
+                      <div className="flex items-center gap-2 text-zinc-500 text-sm mb-1">
                         {Icons.shield}
                         <span>VAC баны</span>
                       </div>
-                      <p className={`text-2xl font-bold ${data.stats.vacBans > 0 ? 'text-rose-400' : 'text-cyan-400'}`}>
+                      <p className={`text-2xl font-bold ${data.stats.vacBans > 0 ? 'text-red-400' : 'text-green-400'}`}>
                         {data.stats.vacBans}
                       </p>
                     </div>
-                    <div className="p-4 bg-slate-800/50 rounded-2xl border border-slate-700/30">
-                      <div className="flex items-center gap-2 text-slate-400 text-sm mb-1">
+                    <div className="p-4 bg-zinc-800/50 rounded-2xl">
+                      <div className="flex items-center gap-2 text-zinc-500 text-sm mb-1">
                         {Icons.ban}
                         <span>Game баны</span>
                       </div>
-                      <p className={`text-2xl font-bold ${data.stats.gameBans > 0 ? 'text-rose-400' : 'text-cyan-400'}`}>
+                      <p className={`text-2xl font-bold ${data.stats.gameBans > 0 ? 'text-red-400' : 'text-green-400'}`}>
                         {data.stats.gameBans}
                       </p>
                     </div>
                     {data.stats.daysSinceLastBan !== undefined && (data.stats.vacBans > 0 || data.stats.gameBans > 0) && (
-                      <div className="p-4 bg-slate-800/50 rounded-2xl border border-slate-700/30">
-                        <div className="flex items-center gap-2 text-slate-400 text-sm mb-1">
+                      <div className="p-4 bg-zinc-800/50 rounded-2xl">
+                        <div className="flex items-center gap-2 text-zinc-500 text-sm mb-1">
                           {Icons.chart}
                           <span>Дней с бана</span>
                         </div>
-                        <p className="text-2xl font-bold text-violet-400">{data.stats.daysSinceLastBan}</p>
+                        <p className="text-2xl font-bold text-yellow-400">{data.stats.daysSinceLastBan}</p>
                       </div>
                     )}
                   </div>
@@ -257,13 +257,13 @@ export default function Home() {
               )}
 
               {/* Auto Refresh */}
-              <div className="mt-6 pt-6 border-t border-indigo-500/10 flex items-center gap-4 flex-wrap">
+              <div className="mt-6 pt-6 border-t border-zinc-800 flex items-center gap-4 flex-wrap">
                 <label className="flex items-center gap-3 cursor-pointer group">
-                  <div className={`relative w-12 h-6 rounded-full transition-colors ${autoRefresh ? 'bg-gradient-to-r from-indigo-500 to-violet-500' : 'bg-slate-700'}`}>
+                  <div className={`relative w-12 h-6 rounded-full transition-colors ${autoRefresh ? 'bg-zinc-100' : 'bg-zinc-700'}`}>
                     <input type="checkbox" checked={autoRefresh} onChange={(e) => setAutoRefresh(e.target.checked)} className="sr-only" />
-                    <div className={`absolute top-1 w-4 h-4 rounded-full transition-all ${autoRefresh ? 'left-7 bg-white' : 'left-1 bg-slate-400'}`} />
+                    <div className={`absolute top-1 w-4 h-4 rounded-full transition-all ${autoRefresh ? 'left-7 bg-zinc-900' : 'left-1 bg-zinc-500'}`} />
                   </div>
-                  <span className="text-sm text-slate-300 flex items-center gap-2">
+                  <span className="text-sm text-zinc-400 flex items-center gap-2">
                     {Icons.refresh} Автообновление
                   </span>
                 </label>
@@ -272,15 +272,15 @@ export default function Home() {
                     <select
                       value={refreshInterval}
                       onChange={(e) => setRefreshInterval(Number(e.target.value))}
-                      className="bg-slate-800 rounded-xl px-4 py-2 text-sm border border-indigo-500/20 focus:border-indigo-500/50 focus:outline-none"
+                      className="bg-zinc-800 rounded-xl px-4 py-2 text-sm border border-zinc-700 focus:border-zinc-600 focus:outline-none"
                     >
                       <option value={10}>10 сек</option>
                       <option value={30}>30 сек</option>
                       <option value={60}>1 мин</option>
                       <option value={300}>5 мин</option>
                     </select>
-                    <span className="text-xs text-indigo-400 flex items-center gap-1">
-                      <span className="w-2 h-2 bg-indigo-400 rounded-full animate-pulse" />
+                    <span className="text-xs text-green-400 flex items-center gap-1">
+                      <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
                       Активно
                     </span>
                   </>
@@ -291,60 +291,60 @@ export default function Home() {
             {/* Server Status */}
             {data.player.gameid === '252490' ? (
               data.server ? (
-                <div className="p-6 bg-gradient-to-br from-indigo-950/50 to-violet-950/30 border border-indigo-500/30 rounded-3xl">
+                <div className="p-6 bg-zinc-900 border border-green-500/30 rounded-3xl">
                   <div className="flex items-center gap-3 mb-5">
-                    <span className="w-3 h-3 bg-cyan-400 rounded-full animate-pulse shadow-lg shadow-cyan-400/50" />
-                    <span className="text-cyan-300 font-semibold text-lg">Сейчас играет в Rust</span>
+                    <span className="w-3 h-3 bg-green-500 rounded-full animate-pulse" />
+                    <span className="text-green-400 font-semibold text-lg">Сейчас играет в Rust</span>
                   </div>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="flex items-center gap-3 p-3 bg-slate-900/50 rounded-xl border border-indigo-500/10">
+                    <div className="flex items-center gap-3 p-3 bg-zinc-800/50 rounded-xl">
                       {Icons.server}
                       <div>
-                        <p className="text-xs text-indigo-300/50">Сервер</p>
+                        <p className="text-xs text-zinc-500">Сервер</p>
                         <p className="font-medium">{data.server.name}</p>
                       </div>
                     </div>
-                    <div className="flex items-center gap-3 p-3 bg-slate-900/50 rounded-xl border border-indigo-500/10">
+                    <div className="flex items-center gap-3 p-3 bg-zinc-800/50 rounded-xl">
                       {Icons.users}
                       <div>
-                        <p className="text-xs text-indigo-300/50">Игроки</p>
+                        <p className="text-xs text-zinc-500">Игроки</p>
                         <p className="font-medium">{data.server.players}/{data.server.maxPlayers}</p>
                       </div>
                     </div>
-                    <div className="flex items-center gap-3 p-3 bg-slate-900/50 rounded-xl border border-indigo-500/10">
+                    <div className="flex items-center gap-3 p-3 bg-zinc-800/50 rounded-xl">
                       {Icons.map}
                       <div>
-                        <p className="text-xs text-indigo-300/50">Карта</p>
+                        <p className="text-xs text-zinc-500">Карта</p>
                         <p className="font-medium">{data.server.map}</p>
                       </div>
                     </div>
-                    <div className="flex items-center gap-3 p-3 bg-slate-900/50 rounded-xl border border-indigo-500/10">
+                    <div className="flex items-center gap-3 p-3 bg-zinc-800/50 rounded-xl">
                       {Icons.globe}
                       <div>
-                        <p className="text-xs text-indigo-300/50">IP адрес</p>
+                        <p className="text-xs text-zinc-500">IP адрес</p>
                         <p className="font-medium font-mono">{data.server.ip}:{data.server.port}</p>
                       </div>
                     </div>
                   </div>
                   {data.server.url && (
-                    <a href={data.server.url} target="_blank" className="inline-flex items-center gap-2 mt-5 px-5 py-2.5 bg-gradient-to-r from-indigo-600/20 to-violet-500/20 hover:from-indigo-600/30 hover:to-violet-500/30 border border-indigo-500/30 rounded-xl text-indigo-300 transition-colors">
+                    <a href={data.server.url} target="_blank" className="inline-flex items-center gap-2 mt-5 px-5 py-2.5 bg-zinc-800 hover:bg-zinc-700 border border-zinc-700 rounded-xl text-zinc-300 transition-colors">
                       Открыть на BattleMetrics {Icons.external}
                     </a>
                   )}
                 </div>
               ) : (
-                <div className="p-6 bg-gradient-to-br from-violet-950/30 to-purple-950/20 border border-violet-500/30 rounded-3xl">
-                  <p className="text-violet-300 font-medium">Играет в Rust, но сервер скрыт или не найден</p>
-                  {data.player.gameserverip && <p className="text-slate-400 mt-2 font-mono">IP: {data.player.gameserverip}</p>}
+                <div className="p-6 bg-zinc-900 border border-yellow-500/30 rounded-3xl">
+                  <p className="text-yellow-400 font-medium">Играет в Rust, но сервер скрыт или не найден</p>
+                  {data.player.gameserverip && <p className="text-zinc-500 mt-2 font-mono">IP: {data.player.gameserverip}</p>}
                 </div>
               )
             ) : data.player.gameextrainfo ? (
-              <div className="p-6 bg-gradient-to-br from-slate-800/50 to-slate-900/50 border border-slate-600/30 rounded-3xl">
-                <p className="text-slate-300 font-medium">Сейчас играет в: {data.player.gameextrainfo}</p>
+              <div className="p-6 bg-zinc-900 border border-zinc-700 rounded-3xl">
+                <p className="text-zinc-300 font-medium">Сейчас играет в: {data.player.gameextrainfo}</p>
               </div>
             ) : (
-              <div className="p-6 bg-slate-900/50 border border-slate-800/50 rounded-3xl">
-                <p className="text-slate-500">Не в игре</p>
+              <div className="p-6 bg-zinc-900 border border-zinc-800 rounded-3xl">
+                <p className="text-zinc-500">Не в игре</p>
               </div>
             )}
           </div>
@@ -353,21 +353,21 @@ export default function Home() {
         {/* Favorites */}
         {favorites.length > 0 && (
           <div className="mb-8">
-            <h3 className="text-xl font-semibold mb-4 flex items-center gap-2 text-violet-400">
+            <h3 className="text-xl font-semibold mb-4 flex items-center gap-2 text-yellow-400">
               {Icons.star} Избранные игроки
             </h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
               {favorites.map(player => (
                 <div
                   key={player.steamid}
-                  className="group flex items-center gap-4 p-4 bg-gradient-to-br from-slate-900 to-slate-950 rounded-2xl border border-violet-500/20 hover:border-violet-500/50 cursor-pointer transition-all hover:shadow-lg hover:shadow-violet-500/10"
+                  className="group flex items-center gap-4 p-4 bg-zinc-900 rounded-2xl border border-zinc-800 hover:border-zinc-600 cursor-pointer transition-all"
                   onClick={() => { setSteamUrl(player.url); handleSearch(player.url); }}
                 >
                   <img src={player.avatar} alt="" className="w-12 h-12 rounded-xl" />
                   <span className="flex-1 font-medium truncate">{player.name}</span>
                   <button
                     onClick={(e) => { e.stopPropagation(); toggleFavorite(player); }}
-                    className="p-2 text-slate-500 hover:text-rose-400 hover:bg-rose-500/10 rounded-lg transition-colors opacity-0 group-hover:opacity-100"
+                    className="p-2 text-zinc-600 hover:text-red-400 hover:bg-red-500/10 rounded-lg transition-colors opacity-0 group-hover:opacity-100"
                   >
                     {Icons.x}
                   </button>
@@ -381,10 +381,10 @@ export default function Home() {
         {history.length > 0 && (
           <div>
             <div className="flex items-center justify-between mb-4">
-              <h3 className="text-xl font-semibold flex items-center gap-2 text-slate-400">
+              <h3 className="text-xl font-semibold flex items-center gap-2 text-zinc-400">
                 {Icons.clock} История поиска
               </h3>
-              <button onClick={clearHistory} className="flex items-center gap-1 text-sm text-slate-500 hover:text-rose-400 transition-colors">
+              <button onClick={clearHistory} className="flex items-center gap-1 text-sm text-zinc-600 hover:text-red-400 transition-colors">
                 {Icons.trash} Очистить
               </button>
             </div>
@@ -392,11 +392,11 @@ export default function Home() {
               {history.map(player => (
                 <div
                   key={player.steamid}
-                  className="flex items-center gap-3 p-3 bg-slate-900/50 rounded-xl border border-slate-800/50 hover:border-indigo-500/30 hover:bg-slate-900 cursor-pointer transition-all"
+                  className="flex items-center gap-3 p-3 bg-zinc-900/50 rounded-xl border border-zinc-800/50 hover:border-zinc-700 hover:bg-zinc-900 cursor-pointer transition-all"
                   onClick={() => { setSteamUrl(player.url); handleSearch(player.url); }}
                 >
                   <img src={player.avatar} alt="" className="w-10 h-10 rounded-lg" />
-                  <span className="flex-1 truncate text-sm text-slate-300">{player.name}</span>
+                  <span className="flex-1 truncate text-sm text-zinc-400">{player.name}</span>
                 </div>
               ))}
             </div>
