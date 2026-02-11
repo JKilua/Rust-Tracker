@@ -64,7 +64,7 @@ export default function Home() {
   const [history, setHistory] = useState<SavedPlayer[]>([])
   const [favorites, setFavorites] = useState<SavedPlayer[]>([])
   const [autoRefresh, setAutoRefresh] = useState(true)
-  const [refreshInterval, setRefreshInterval] = useState(10)
+  const [refreshInterval, setRefreshInterval] = useState(5)
   const [pageLoading, setPageLoading] = useState(true)
 
   useEffect(() => {
